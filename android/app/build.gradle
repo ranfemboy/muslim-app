@@ -8,6 +8,15 @@ android {
     namespace 'com.ranfemboy.muslimapp'
     compileSdk 34
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+
     defaultConfig {
         applicationId 'com.ranfemboy.muslimapp'
         minSdk 21
@@ -19,6 +28,8 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.debug
+            minifyEnabled false
+            shrinkResources false
         }
     }
 }
