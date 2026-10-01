@@ -27,16 +27,13 @@ jobs:
         
       - name: Build APK
         run: flutter build apk --release --no-tree-shake-icons
-        continue-on-error: true
         
-      - name: Find APK
-        run: find . -name "*.apk" -type f
+      - name: Find APK location
+        run: find /home/runner/work -name "*.apk" 2>/dev/null
         
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: muslim-app
-          path: |
-            build/app/outputs/flutter-apk/*.apk
-            build/app/outputs/apk/release/*.apk
-          if-no-files-found: warn
+          name: muslim-app-release
+          path: build/app/outputs/flutter-apk/app-release.apk
+          if-no-files-found: error
