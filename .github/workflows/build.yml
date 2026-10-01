@@ -25,15 +25,19 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
         
-      - name: Build APK
-        run: flutter build apk --release --no-tree-shake-icons
+      - name: Generate Flutter files
+        run: flutter build apk --release --no-tree-shake-icons || true
         
-      - name: Find APK location
-        run: find /home/runner/work -name "*.apk" 2>/dev/null
+      - name: Build with Gradle directly
+        working-directory: android
+        run: ./gradlew assembleRelease
+        
+      - name: Find APK
+        run: find . -name "*.apk" -type f
         
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: muslim-app-release
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: android/app/build/outputs/apk/release/app-release.apk
           if-no-files-found: error
